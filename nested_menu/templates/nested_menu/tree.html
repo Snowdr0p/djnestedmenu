@@ -1,0 +1,39 @@
+{% load menu_extras %}
+<ul>
+    {% for menu_item, nested_tree in tree_menu.items %}
+        <li>
+            {% if menu_item.url %}
+            <a href="{{ '/'|add:menu_item.url }}">
+                {% if menu_item.name in names_list %}
+                    <b>{{ menu_item.name }}</b>
+                    {% if nested_tree %}
+                        {% create_tree_menu nested_tree names_list %}
+                    {% endif %}
+                {% else %}
+                    {{ menu_item.name }}
+                {% endif %}
+            </a>
+            {% elif menu_item.url_name %}
+            <a href="{% url menu_item.url_name %}">
+                {% if menu_item.name in names_list %}
+                    <b>{{ menu_item.name }}</b>
+                    {% if nested_tree %}
+                        {% create_tree_menu nested_tree names_list %}
+                    {% endif %}
+                {% else %}
+                    {{ menu_item.name }}
+                {% endif %}
+            </a>
+            {% else %}
+                {% if menu_item.name in names_list %}
+                    <b>{{ menu_item.name }}</b>
+                    {% if nested_tree %}
+                        {% create_tree_menu nested_tree names_list %}
+                    {% endif %}
+                {% else %}
+                    {{ menu_item.name }}
+                {% endif %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
